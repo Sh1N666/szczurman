@@ -1,5 +1,5 @@
 import { Storage } from "@plasmohq/storage"
-import imgAsset from "data-base64:~../assets/icon.png"
+import imgAsset from "data-base64:~../assets/FaceLookIcon.png"
 
 const storage = new Storage()
 let factCheckerEnabled = true // Default state
@@ -36,7 +36,7 @@ function setupEventListeners() {
 
     function containsTextOnly(element) {
         const text = element.innerText || '';  
-        const allowedTags = ['A', 'B', 'I', 'STRONG', 'SPAN', 'CODE'];
+        const allowedTags = ['A', 'B', 'I', 'STRONG', 'SPAN', 'CODE','BR'];
         const allAllowedChildren = Array.from(element.children).every(child =>
             allowedTags.includes(child.tagName)
         );
@@ -56,9 +56,9 @@ function setupEventListeners() {
             imageElement.style.right = "0px" // Ustawienie obrazu na prawo od elementu
             imageElement.style.top = "0%"
             imageElement.style.zIndex = "9999"
-            imageElement.style.width = "30px"
-            imageElement.style.height = "30px"
-            imageElement.style.opacity = "0.8"
+            imageElement.style.width = "45px"
+            imageElement.style.height = "45px"
+            imageElement.style.opacity = "1"
             imageElement.style.transition = "all 0.3s ease" // Dodajemy animację
             imageElement.classList.add("floating-icon")
             document.body.appendChild(imageElement) // Dodajemy obrazek do body, aby był zawsze widoczny
