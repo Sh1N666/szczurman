@@ -24,14 +24,10 @@ const PasswordManager = () => {
     const [validationResults, setValidationResults] = useState<{ [key: string]: string }>({});
     const [savePasswords, setSavePasswords] = useState<boolean>(true);
 
-    // 🔄 Funkcja do ładowania haseł
     const loadPasswords = async () => {
         try {
             const savedPasswords = await storage.get<{ [key: string]: string }>("capturedPasswords") || {};
-            console.log("🔄 Loaded passwords:", savedPasswords);
             setPasswords(savedPasswords);
-
-            // 🔍 Przelicz walidację dla każdego hasła
             const results: { [key: string]: string } = {};
             Object.entries(savedPasswords).forEach(([site, password]) => {
                 results[site] = validatePassword(password);
@@ -42,16 +38,12 @@ const PasswordManager = () => {
         }
     };
 
-    // 🎧 Nasłuchiwanie na zmiany w Plasmo Storage
     useEffect(() => {
-        loadPasswords(); // Załaduj hasła przy pierwszym renderze
+        loadPasswords();
 
         const unsubscribe = storage.watch({
             capturedPasswords: (newValue) => {
-                console.log("🔔 Passwords updated in storage:", newValue.newValue);
                 setPasswords(newValue.newValue || {});
-
-                // 🔍 Przelicz walidację dla nowo zapisanych haseł
                 const results: { [key: string]: string } = {};
                 Object.entries(newValue.newValue || {}).forEach(([site, password]) => {
                     results[site] = validatePassword(password);
@@ -60,21 +52,44 @@ const PasswordManager = () => {
             }
         });
 
-        // Załaduj stan zapisywania haseł
         const loadSavePasswordsState = async () => {
             const savedState = await storage.get<boolean>("savePasswords");
-            setSavePasswords(savedState ?? true); // Domyślnie true
+            setSavePasswords(savedState ?? true);
         };
-
         loadSavePasswordsState();
-
     }, []);
 
     const handleToggleChange = async () => {
         const newValue = !savePasswords;
         setSavePasswords(newValue);
         await storage.set("savePasswords", newValue);
-        console.log("🔄 Save passwords state changed:", newValue);
+    };
+
+    const capturePasswordAfterLogin = async (site: string, password: string) => {
+        if (!savePasswords) return;
+
+        const checkLoginSuccess = () => {
+            return new Promise<boolean>((resolve) => {
+                setTimeout(() => {
+                    if (document.body.innerText.includes("Wyloguj") || document.location.pathname.includes("dashboard")) {
+                        resolve(true);
+                    } else {
+                        resolve(false);
+                    }
+                }, 2000);
+            });
+        };
+
+        const success = await checkLoginSuccess();
+        if (success) {
+            const updatedPasswords = { ...passwords, [site]: password };
+            await storage.set("capturedPasswords", updatedPasswords);
+            setPasswords(updatedPasswords);
+            setValidationResults({ ...validationResults, [site]: validatePassword(password) });
+            console.log("✅ Hasło zapisane dla:", site);
+        } else {
+            console.log("❌ Logowanie nieudane, hasło nie zostało zapisane");
+        }
     };
 
     return (
@@ -90,7 +105,7 @@ const PasswordManager = () => {
                 <ul>
                     {Object.entries(passwords).map(([site, password]) => (
                         <li key={site}>
-                            <strong>{site}</strong> {/*{password}*/}
+                            <strong>{site}</strong>
                             <p style={{ color: validationResults[site] === "✅ Hasło jest bezpieczne!" ? "green" : "red" }}>
                                 {validationResults[site]}
                             </p>
