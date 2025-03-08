@@ -1,0 +1,17 @@
+{
+  "name": "szczurman",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "plasmo dev",
+    "build": "plasmo build",
+    "start": "plasmo preview"
+  },
+  "dependencies": {
+    "uuid": "^11.1.0",
+    "js-base64": "^3.7.2",
+    "@plasmohq/storage": "^0.8.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^10.0.0"
+  }
+}
