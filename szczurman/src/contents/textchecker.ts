@@ -91,7 +91,7 @@ function setupEventListeners() {
                 imageElement.style.height = "160px";
                 imageElement.style.left = `${startX}px`;
                 imageElement.style.top = `${rect.top + window.scrollY - 115}px`;
-                imageElement.style.transition = "left 5s linear";
+                imageElement.style.transition = "left 3s linear";
 
                 let animationRunning = true; // Flaga do kontroli animacji
 
@@ -111,7 +111,7 @@ function setupEventListeners() {
                         imageElement.style.left = `${rect.right - 45}px`;
                         imageElement.style.top = `${rect.top + window.scrollY - 45}px`;
                     }
-                }, 5000);
+                }, 3000);
 
                 if (selectedText) boxText = selectedText;
 
