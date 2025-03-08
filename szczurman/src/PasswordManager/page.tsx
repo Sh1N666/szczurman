@@ -22,6 +22,7 @@ const validatePassword = (password: string): string => {
 const PasswordManager = () => {
     const [passwords, setPasswords] = useState<{ [key: string]: string }>({});
     const [validationResults, setValidationResults] = useState<{ [key: string]: string }>({});
+    const [savePasswords, setSavePasswords] = useState<boolean>(true);
 
     // 🔄 Funkcja do ładowania haseł
     const loadPasswords = async () => {
@@ -59,14 +60,30 @@ const PasswordManager = () => {
             }
         });
 
-        return () => {
-            unsubscribe(); // Odłącz nasłuchiwanie przy odmontowaniu komponentu
+        // Załaduj stan zapisywania haseł
+        const loadSavePasswordsState = async () => {
+            const savedState = await storage.get<boolean>("savePasswords");
+            setSavePasswords(savedState ?? true); // Domyślnie true
         };
+
+        loadSavePasswordsState();
+
     }, []);
+
+    const handleToggleChange = async () => {
+        const newValue = !savePasswords;
+        setSavePasswords(newValue);
+        await storage.set("savePasswords", newValue);
+        console.log("🔄 Save passwords state changed:", newValue);
+    };
 
     return (
         <div>
             <h2>🔐 Password Manager</h2>
+            <label>
+                <input type="checkbox" checked={savePasswords} onChange={handleToggleChange} />
+                Save passwords
+            </label>
             {Object.keys(passwords).length === 0 ? (
                 <p>No passwords captured yet.</p>
             ) : (
