@@ -8,14 +8,14 @@ import { AuthProvider, useAuth } from "./AuthContext";
 function Navbar() {
   const { user, logout } = useAuth();
 
-  if (!user) return null; // ❗ Ukrywamy pasek nawigacyjny dla niezalogowanych użytkowników
+  if (!user) return null;
 
   return (
     <nav style={{ padding: 16, borderBottom: "1px solid #ccc", display: "flex", gap: 16 }}>
-      <a href="/">Home</a>
-      <a href="/assistant">Options</a>
-      <a href="/FactCheck">FactChecker</a>
-      <a href="/PasswordManager">Password Manager</a>
+      <Link to="/">Home</Link>
+      <Link to="/assistant">Assistant</Link>
+      <Link to="/FactCheck">factCheker</Link>
+      <Link to="/PasswordManager">Password Manager</Link>
       <button onClick={logout}>🚪 Wyloguj</button>
     </nav>
   );
