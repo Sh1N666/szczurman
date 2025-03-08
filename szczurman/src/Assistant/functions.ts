@@ -19,6 +19,7 @@ export const useChatGPT = () => {
           model: "gpt-4",
           messages: [{ role: "system", content: SYSTEM_PROMPT }, ...messages],
           temperature: 0.7,
+          max_tokens: 200
         });
         
         if (!response.choices || response.choices.length === 0) {

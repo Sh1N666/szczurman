@@ -10,8 +10,18 @@
     "package": "plasmo package"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@plasmohq/storage": "^1.15.0",
     "firebase": "^11.4.0",
+=======
+    "@emotion/react": "11.11.0",
+    "@emotion/styled": "11.11.0",
+    "@mui/material": "5.15.14",
+    "@plasmohq/storage": "^1.15.0",
+    "firebase": "^11.4.0",
+    "lucide-react": "^0.479.0",
+    "marked": "^15.0.7",
+>>>>>>> main
     "openai": "^4.86.2",
     "plasmo": "0.90.3",
     "react": "18.2.0",
@@ -26,8 +36,14 @@
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
+<<<<<<< HEAD
     "@types/uuid": "^10.0.0",
+=======
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.5.3",
+>>>>>>> main
     "prettier": "3.2.4",
+    "tailwindcss": "^3.4.17",
     "typescript": "5.3.3"
   },
   "manifest": {
