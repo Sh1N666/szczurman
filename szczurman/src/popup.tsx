@@ -5,13 +5,36 @@ import PassFun from "./Options/page"
 
 function Navbar() {
   return (
-    <nav style={{ padding: 16, borderBottom: "1px solid #ccc", display: "flex", gap: 16 }}>
-      <Link to="/Assistant">Assystent Bezpieczenstwa</Link>
-      <Link to="/PasswordManager">Hasla</Link>
-      <Link to="/Options">Opcje</Link>
-    </nav>
+    <div style={{width: '180px'}}>
+      <nav className="bg-gradient-to-r from-teal-400 to-blue-500 p-4 shadow-lg">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          
+          <div >
+            <Link to="/Assistant">
+              <button className="flex px-6 py-3 bg-gradient-to-r from-yellow-400 to-red-500 text-white text-lg font-semibold rounded-lg transform transition duration-300 hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                Assystent
+              </button>
+            </Link>
+          
+            <Link to="/PasswordManager">
+              <button className="flex px-6 py-3 w-[120%] bg-gradient-to-r from-yellow-400 to-red-500 text-white text-lg font-semibold rounded-lg transform transition duration-300 hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                Hasla
+              </button>
+            </Link>
+
+            <Link to="/Options">
+              <button className="flex px-6 py-3 w-[120%] bg-gradient-to-r from-yellow-400 to-red-500 text-white text-lg font-semibold rounded-lg transform transition duration-300 hover:scale-110 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                Opcje
+              </button>
+            </Link>
+          </div>
+        </div>
+      </nav>
+    </div>
   );
 }
+
+
 
 function Home() {
   return (

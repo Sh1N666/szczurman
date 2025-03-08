@@ -63,6 +63,7 @@ export default function PassFun() {
               />
               Wylaczyć hasła takie same
             </label>
+            <br/>
             <label className="inline-flex items-center text-lg text-gray-800">
               <input
                 type="radio"
