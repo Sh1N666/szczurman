@@ -24,7 +24,7 @@ export default function Popup() {
   return ( 
     <div className="flex justify-center items-center h-screen bg-[#dda15e]">
       <div className="p-6 bg-[#ffe6a7] rounded-lg shadow-lg w-64 text-center text-[#6d4c2b] font-semibold">
-        <h2 className="mb-4 text-xl font-bold border-b-2 border-[#ffbe0b] pb-2">Fact Checker</h2>
+        <h2 className="mb-4 text-xl font-bold border-b-2 border-[#ffbe0b] pb-2"> Szczurfikator faktów </h2>
         <label className="inline-flex items-center cursor-pointer">
           <input
             type="checkbox"
@@ -38,7 +38,7 @@ export default function Popup() {
           </span>
         </label>
         <img src={CheeseCoin} className="w-24 h-24 border-[#ffbe0b] border-4 rounded-full mt-4 mx-auto" alt="Cheese Coiny" />
-        <p className="mt-2 text-[#6d4c2b] text-lg font-bold">Aktualne Cheese Coiny: 100</p>
+        <p className="mt-2 text-[#6d4c2b] text-lg font-bold">Aktualne Cheese Coiny: 10</p>
         <button className="mt-4 bg-[#6d4c2b] text-[#ffe6a7] px-6 py-3 rounded-md text-lg hover:bg-[#ffbe0b] hover:text-[#6d4c2b] transition-colors">Kup Cheese Coiny</button>
       </div>
     </div>

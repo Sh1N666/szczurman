@@ -48,7 +48,6 @@ const PasswordManager = () => {
         };
         loadSavePasswordsState();
 
-        return () => unsubscribe();
     }, []);
 
     const handleToggleChange = async () => {
@@ -66,7 +65,7 @@ const PasswordManager = () => {
 
     return (
         <div className="p-6 bg-[#ffe6a7] rounded-lg shadow-lg w-full max-w-md mx-auto text-[#99582a] font-medium flex flex-col items-center">
-            <h2 className="text-xl font-bold border-b-2 border-[#ffbe0b] pb-2 mb-4">Password Manager</h2>
+            <h2 className="text-xl font-bold border-b-2 border-[#ffbe0b] pb-2 mb-4"> Szczurmenadżer haseł </h2>
             <label className="inline-flex items-center cursor-pointer mb-4">
                 <input
                     type="checkbox"

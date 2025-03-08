@@ -24,7 +24,7 @@ function Navbar() {
           }`
         }
       >
-        Home
+        Szczurze tipy
       </NavLink>
       <NavLink
         to="/assistant"
@@ -34,7 +34,7 @@ function Navbar() {
           }`
         }
       >
-        Assistant
+        Szczurzystent
       </NavLink>
       <NavLink
         to="/FactCheck"
@@ -44,7 +44,7 @@ function Navbar() {
           }`
         }
       >
-        Fact Checker
+        Szczurfikator faktów
       </NavLink>
       <NavLink
         to="/PasswordManager"
@@ -54,7 +54,7 @@ function Navbar() {
           }`
         }
       >
-        Password Manager
+        Szczurmenadżer haseł
       </NavLink>
 
       <button
