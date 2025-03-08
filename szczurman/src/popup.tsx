@@ -1,6 +1,7 @@
 import { MemoryRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Assistant from "./Assistant/page";
 import FactCheck from "./Factcheck/page";
+import PasswordMenager from "./PasswordManager/page";
 
 function Navbar() {
   return (
@@ -8,6 +9,7 @@ function Navbar() {
       <Link to="/">Home</Link>
       <Link to="/assistant">Options</Link>
       <Link to="/FactCheck">factCheker</Link>
+      <Link to="/PasswordMenager">PasswordMenager</Link> 
     </nav>
   );
 }
@@ -32,6 +34,7 @@ function Layout() {
           <Route path="/" element={<Home />} />
           <Route path="/assistant" element={<Assistant />} />
           <Route path="/FactCheck" element={<FactCheck />} />
+          <Route path="/PasswordMenager" element={<PasswordMenager />} />
         </Routes>
       </div>
     </div>
