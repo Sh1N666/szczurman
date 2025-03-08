@@ -1,11 +1,11 @@
 const OPENAI_API_KEY = process.env.PLASMO_PUBLIC_OPENAI_API_KEY;
-const CHAT_SYSTEM_PROMPT = process.env.PLASMO_PUBLIC_CHAT_SYSTEM_PROMPT;
 const FACTCHECK_SYSTEM_PROMPT = process.env.PLASMO_PUBLIC_FACTCHECK_SYSTEM_PROMPT;
 
 chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.action === "analyze_text") {
       const text = message.text;
       console.log("Analyzing text:", text);
+    
 
       try {
           const response = await fetch("https://api.openai.com/v1/chat/completions", {
@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
               body: JSON.stringify({
                   model: "gpt-4",
                   messages: [
-                      { role: "system", content: CHAT_SYSTEM_PROMPT },
+                      { role: "system", content: FACTCHECK_SYSTEM_PROMPT },
                       { role: "user", content: text }
                   ]
               })
