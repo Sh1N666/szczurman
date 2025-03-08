@@ -1,9 +1,10 @@
-import { MemoryRouter as Router, Routes, Route, Link , Navigate } from "react-router-dom";
+import { MemoryRouter as Router, Routes, Route, NavLink , Navigate } from "react-router-dom";
 import Assistant from "./Assistant/page";
 import FactCheck from "./Factcheck/page";
 import PasswordManager from "./PasswordManager/page";
 import Login from "./Auth/login";
 import { AuthProvider, useAuth } from "./AuthContext";
+import "~/styles/global.css";
 
 function Navbar() {
   const { user, logout } = useAuth();
@@ -11,12 +12,54 @@ function Navbar() {
   if (!user) return null;
 
   return (
-    <nav style={{ padding: 16, borderBottom: "1px solid #ccc", display: "flex", gap: 16 }}>
-      <Link to="/">Home</Link>
-      <Link to="/assistant">Assistant</Link>
-      <Link to="/FactCheck">factCheker</Link>
-      <Link to="/PasswordManager">Password Manager</Link>
-      <button onClick={logout}>🚪 Wyloguj</button>
+    <nav className="flex flex-col gap-4 bg-gradient-to-b from-[#dda15e] to-[#99582a] shadow-lg w-1/6 rounded-lg h-full">
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `transition-all duration-200 rounded-md text-center ${
+            isActive ? "bg-[#ffbe0b] text-[#99582a] font-bold" : "text-[#ffe6a7] hover:text-[#ffbe0b] hover:bg-[#99582a]"
+          }`
+        }
+      >
+        Home
+      </NavLink>
+      <NavLink
+        to="/assistant"
+        className={({ isActive }) =>
+          `transition-all duration-200 rounded-md text-center ${
+            isActive ? "bg-[#ffbe0b] text-[#99582a] font-bold" : "text-[#ffe6a7] hover:text-[#ffbe0b] hover:bg-[#99582a]"
+          }`
+        }
+      >
+        Assistant
+      </NavLink>
+      <NavLink
+        to="/FactCheck"
+        className={({ isActive }) =>
+          `transition-all duration-200 rounded-md text-center ${
+            isActive ? "bg-[#ffbe0b] text-[#99582a] font-bold" : "text-[#ffe6a7] hover:text-[#ffbe0b] hover:bg-[#99582a]"
+          }`
+        }
+      >
+        Fact Checker
+      </NavLink>
+      <NavLink
+        to="/PasswordManager"
+        className={({ isActive }) =>
+          `transition-all duration-200 rounded-md text-center ${
+            isActive ? "bg-[#ffbe0b] text-[#99582a] font-bold" : "text-[#ffe6a7] hover:text-[#ffbe0b] hover:bg-[#99582a]"
+          }`
+        }
+      >
+        Password Manager
+      </NavLink>
+
+      <button
+        onClick={logout}
+        className="mt-auto h-10 bg-[#99582a] text-[#ffe6a7] rounded-md hover:bg-[#dda15e] hover:text-[#ffbe0b] transition hover:scale-105"
+      >
+        Wyloguj
+      </button>
     </nav>
   );
 }
@@ -36,13 +79,13 @@ function Layout() {
   const { user } = useAuth();
 
   if (!user) {
-    return <Navigate to="/login" replace />; // ❗ Jeśli użytkownik nie jest zalogowany, przenosimy go do logowania
+    return <Navigate to="/login" replace />;
   }
 
   return (
-    <div>
+    <div className="flex flex-row-reverse items-start rounded-lg w-[450px] h-96 bg-[#dda15e] shadow-lg">
       <Navbar />
-      <div style={{ padding: 16 }}>
+      <div className="w-[400px] bg-[#ffe6a7] rounded-lg text-[#99582a] shadow-md">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/assistant" element={<Assistant />} />
