@@ -19,6 +19,19 @@ const PasswordManager = () => {
         }
     };
 
+    const watchPasswords = () => {
+        storage.watch({
+            capturedPasswords: (newValue) => {
+                console.log("Captured passwords have been updated:", newValue);
+                setPasswords(newValue.newValue || {}); // Ustawiamy nowe hasła
+                setValidationResults({}); // Możesz również zresetować wyniki walidacji
+            }
+        });
+    };
+    
+    // Wywołanie funkcji, aby rozpocząć obserwowanie zmian
+    watchPasswords();
+
     useEffect(() => {
         loadPasswords();
 
