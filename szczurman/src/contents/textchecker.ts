@@ -18,6 +18,13 @@ async function initialize() {
     storage.watch({
         factChekerEnabled: (newValue) => {
             factCheckerEnabled = newValue.newValue
+            if(!factCheckerEnabled){
+                imageElement.style.display="none";
+                currentHighlightedBlock.style.backgroundColor = "";
+            }
+            else{
+                imageElement.style.display="block";
+            }
             console.log("Fact Checker state changed:", newValue)
         }
     })
