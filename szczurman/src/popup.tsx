@@ -1,15 +1,21 @@
 import { MemoryRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Assistant from "./Assistant/page";
 import FactCheck from "./Factcheck/page";
-import PasswordMenager from "./PasswordManager/page";
+import PasswordManager from "./PasswordManager/page";
+import Login from "./Auth/login";
+import PrivateRoute from "./PrivateRoute";
+import { AuthProvider, useAuth } from "./AuthContext";
 
 function Navbar() {
+  const { user, logout } = useAuth();
+
   return (
     <nav style={{ padding: 16, borderBottom: "1px solid #ccc", display: "flex", gap: 16 }}>
       <Link to="/">Home</Link>
       <Link to="/assistant">Options</Link>
-      <Link to="/FactCheck">factCheker</Link>
-      <Link to="/PasswordMenager">PasswordMenager</Link> 
+      <Link to="/FactCheck">FactChecker</Link>
+      <Link to="/PasswordManager">Password Manager</Link>
+      {user && <button onClick={logout}>🚪 Wyloguj</button>}
     </nav>
   );
 }
@@ -31,10 +37,11 @@ function Layout() {
       <Navbar />
       <div style={{ padding: 16 }}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/assistant" element={<Assistant />} />
-          <Route path="/FactCheck" element={<FactCheck />} />
-          <Route path="/PasswordMenager" element={<PasswordMenager />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="/assistant" element={<PrivateRoute><Assistant /></PrivateRoute>} />
+          <Route path="/FactCheck" element={<PrivateRoute><FactCheck /></PrivateRoute>} />
+          <Route path="/PasswordManager" element={<PrivateRoute><PasswordManager /></PrivateRoute>} />
         </Routes>
       </div>
     </div>
@@ -43,9 +50,11 @@ function Layout() {
 
 function IndexPopup() {
   return (
-    <Router>
-      <Layout />
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Layout />
+      </Router>
+    </AuthProvider>
   );
 }
 
