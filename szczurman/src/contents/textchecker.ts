@@ -11,6 +11,7 @@ let currentHighlightedBlock = null; // Zmienna przechowująca aktualnie zaznaczo
 let blockLock = false;
 
 async function initialize() {
+    console.log("aaaaaaaaaaaaaa")
     const storedValue = await storage.get("factChekerEnabled")
     factCheckerEnabled = storedValue === "true" || storedValue === true
 
@@ -243,5 +244,12 @@ function showPopup(replyHtml) {
 
 }
 
-// 🚀 Start the script after loading storage
-initialize()
+async function initializeWithDelay() {
+    // Wait for content to load (e.g., 5 seconds delay)
+    setTimeout(async () => {
+        // Now initialize your script after waiting for content to load
+        await initialize();
+    }, 2000);
+}
+
+initializeWithDelay();
