@@ -1,3 +1,19 @@
+// Konwersja Base64 <-> ArrayBuffer (bezbłędna)
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+    return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+}
+
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+    const binaryString = atob(base64);
+    const len = binaryString.length;
+    const bytes = new Uint8Array(len);
+    for (let i = 0; i < len; i++) {
+        bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
+
+// 📌 Generowanie kluczy RSA
 export async function generateRSAKeys() {
     const keyPair = await window.crypto.subtle.generateKey(
         {
@@ -14,39 +30,59 @@ export async function generateRSAKeys() {
     const privateKey = await window.crypto.subtle.exportKey("pkcs8", keyPair.privateKey);
 
     return {
-        publicKeyBase64: btoa(String.fromCharCode(...new Uint8Array(publicKey))),
-        privateKeyBase64: btoa(String.fromCharCode(...new Uint8Array(privateKey))),
+        publicKeyBase64: arrayBufferToBase64(publicKey),
+        privateKeyBase64: arrayBufferToBase64(privateKey),
     };
 }
 
+// 📌 Szyfrowanie danych (publiczny klucz)
 export async function encryptData(data: string, publicKeyBase64: string) {
-    const publicKeyBuffer = Uint8Array.from(atob(publicKeyBase64), c => c.charCodeAt(0)).buffer;
-    const publicKey = await window.crypto.subtle.importKey(
-        "spki",
-        publicKeyBuffer,
-        { name: "RSA-OAEP", hash: "SHA-256" },
-        false,
-        ["encrypt"]
-    );
+    try {
+        const publicKeyBuffer = base64ToArrayBuffer(publicKeyBase64);
+        const publicKey = await window.crypto.subtle.importKey(
+            "spki",
+            publicKeyBuffer,
+            { name: "RSA-OAEP", hash: "SHA-256" },
+            false,
+            ["encrypt"]
+        );
 
-    const encodedData = new TextEncoder().encode(data);
-    const encryptedBuffer = await window.crypto.subtle.encrypt({ name: "RSA-OAEP" }, publicKey, encodedData);
+        const encodedData = new TextEncoder().encode(data);
+        const encryptedBuffer = await window.crypto.subtle.encrypt(
+            { name: "RSA-OAEP" },
+            publicKey,
+            encodedData
+        );
 
-    return btoa(String.fromCharCode(...new Uint8Array(encryptedBuffer)));
+        return arrayBufferToBase64(encryptedBuffer);
+    } catch (error) {
+        console.error("❌ Błąd szyfrowania:", error);
+        return null;
+    }
 }
 
+// 📌 Odszyfrowywanie danych (prywatny klucz)
 export async function decryptData(encryptedBase64: string, privateKeyBase64: string) {
-    const privateKeyBuffer = Uint8Array.from(atob(privateKeyBase64), c => c.charCodeAt(0)).buffer;
-    const privateKey = await window.crypto.subtle.importKey(
-        "pkcs8",
-        privateKeyBuffer,
-        { name: "RSA-OAEP", hash: "SHA-256" },
-        false,
-        ["decrypt"]
-    );
+    try {
+        const privateKeyBuffer = base64ToArrayBuffer(privateKeyBase64);
+        const privateKey = await window.crypto.subtle.importKey(
+            "pkcs8",
+            privateKeyBuffer,
+            { name: "RSA-OAEP", hash: "SHA-256" },
+            false,
+            ["decrypt"]
+        );
 
-    const encryptedBuffer = Uint8Array.from(atob(encryptedBase64), c => c.charCodeAt(0)).buffer;
-    const decryptedBuffer = await window.crypto.subtle.decrypt({ name: "RSA-OAEP" }, privateKey, encryptedBuffer);
+        const encryptedBuffer = base64ToArrayBuffer(encryptedBase64);
+        const decryptedBuffer = await window.crypto.subtle.decrypt(
+            { name: "RSA-OAEP" },
+            privateKey,
+            encryptedBuffer
+        );
 
-    return new TextDecoder().decode(decryptedBuffer);
+        return new TextDecoder().decode(decryptedBuffer);
+    } catch (error) {
+        console.error("❌ Błąd odszyfrowania:", error);
+        return null;
+    }
 }
