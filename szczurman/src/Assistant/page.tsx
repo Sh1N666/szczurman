@@ -1,16 +1,12 @@
 import { MemoryRouter as Router, Routes, Route, Link } from "react-router-dom"
 
-function AssistantPage() {
-
-}
 
 export default function Assistant() {
     return (
         <div style={{ padding: 16 }}>
-          <h2>Options Page</h2>
-          <p>Here you can configure your settings.</p>
+          <h2>Twoj asystent jest tutaj</h2>
           <Link to="../">
-            <button>Back to Home</button>
+            <button>Go to Assistant</button>
           </Link>
         </div>
       )

@@ -1,11 +1,14 @@
 import { MemoryRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Assistant from "./Assistant/page";
+import ListBox from "./PasswordManager/page";
+import PassFun from "./Options/page"
 
 function Navbar() {
   return (
     <nav style={{ padding: 16, borderBottom: "1px solid #ccc", display: "flex", gap: 16 }}>
-      <Link to="/">Home</Link>
-      <Link to="/assistant">Options</Link>
+      <Link to="/Assistant">Assystent Bezpieczenstwa</Link>
+      <Link to="/PasswordManager">Hasla</Link>
+      <Link to="/Options">Opcje</Link>
     </nav>
   );
 }
@@ -27,8 +30,9 @@ function Layout() {
       <Navbar />
       <div style={{ padding: 16 }}>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/assistant" element={<Assistant />} />
+          <Route path="/Assistant" element={<Assistant />} />
+          <Route path="/Options" element={<PassFun />} />
+          <Route path="/PasswordManager" element={<ListBox />} />
         </Routes>
       </div>
     </div>
