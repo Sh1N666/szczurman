@@ -18,12 +18,12 @@ async function initialize() {
     storage.watch({
         factChekerEnabled: (newValue) => {
             factCheckerEnabled = newValue.newValue
-            if(!factCheckerEnabled){
-                imageElement.style.display="none";
+            if (!factCheckerEnabled) {
+                imageElement.style.display = "none";
                 currentHighlightedBlock.style.backgroundColor = "";
             }
-            else{
-                imageElement.style.display="block";
+            else {
+                imageElement.style.display = "block";
             }
             console.log("Fact Checker state changed:", newValue)
         }
@@ -153,7 +153,7 @@ function setupEventListeners() {
 
         block.addEventListener("mouseover", (event) => {
             if (!factCheckerEnabled || blockLock) return;
-            event.target.style.backgroundColor = "yellow";
+            event.target.style.backgroundColor = "#ffe6a7";
             boxText = event.target.innerText;
 
             // Przesuwamy obrazek do nowego elementu z animacją
@@ -196,12 +196,12 @@ function showPopup(replyHtml) {
     popup.style.position = "fixed";
     popup.style.bottom = "20px";
     popup.style.right = "20px";
-    popup.style.background = "#222";
-    popup.style.color = "#fff";
+    popup.style.background = "#ffe6a7";       // surface
+    popup.style.color = "#99582a";            // text
     popup.style.padding = "15px";
     popup.style.borderRadius = "8px";
     popup.style.zIndex = "10000";
-    popup.style.boxShadow = "0px 4px 10px rgba(0,0,0,0.5)";
+    popup.style.boxShadow = "0px 4px 10px rgba(0,0,0,0.3)";
     popup.style.maxWidth = "350px";
     popup.style.wordWrap = "break-word";
     popup.style.fontSize = "14px";
@@ -211,6 +211,8 @@ function showPopup(replyHtml) {
     popup.style.opacity = "0";
     popup.style.transform = "translateY(20px)";
     popup.style.transition = "opacity 0.3s ease, transform 0.3s ease";
+    popup.style.border = "2px solid #ffbe0b"; // outlines/detail
+
 
 
     // Przycisk zamykania
