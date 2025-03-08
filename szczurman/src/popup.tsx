@@ -1,10 +1,13 @@
+import React from "react";
 import { MemoryRouter as Router, Routes, Route, NavLink , Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Assistant from "./Assistant/page";
 import FactCheck from "./Factcheck/page";
 import PasswordManager from "./PasswordManager/page";
 import Login from "./Auth/login";
 import { AuthProvider, useAuth } from "./AuthContext";
 import "~/styles/global.css";
+import SzczurekGif from "data-base64:~assets/SzczurasStop.gif";
 
 function Navbar() {
   const { user, logout } = useAuth();
@@ -64,16 +67,102 @@ function Navbar() {
   );
 }
 
+
+const tips = [
+  "Ej, młody szczurze, hasło to nie imię twojego chomika! Mocne, długie i z symbolami!",
+  "Nie rozdawaj danych jak darmowego sera! Im mniej wiesz, tym lepiej śpisz!",
+  "Phishing? To pułapka na głupie szczury! Sprawdzaj, gdzie klikasz!",
+  "Nie loguj się na cudzych kompach! Nie wiesz, kto tam zostawił pułapki!",
+  "VPN to twoja tajna norka w necie. Używaj i znikaj z radarów!",
+  "Nie klikasz w podejrzane linki? Jesteś szczurem z klasą!",
+  "Darmowy ser istnieje tylko w pułapkach – nie wierz w obietnice łatwej kasy!",
+  "Twoja kamerka to okno do norki. Zasłoń, jeśli nie używasz!",
+  "Hej, hej, młody szczurze! Aktualizacje to tarcza przeciw wirusom – instaluj je od razu!",
+  "Nie instaluj dziwnych plików – nawet jeśli wyglądają jak ser. To może być trucizna!",
+  "Logowanie dwuskładnikowe? To jak dodatkowa kłódka na twoją norkę!",
+  "Nie ufaj wszystkiemu, co widzisz w necie – szczurzy nos zawsze wyczuwa fejki!",
+  "Oszustwa w sieci? One czają się jak koty! Bądź sprytniejszy!",
+  "Hasła zmieniaj regularnie! Stare hasło to jak nadgryziony ser – prędzej czy później ktoś je dorwie!",
+  "Nie pobieraj dziwnych aplikacji – mogą ci podrzucić szczurzy wirus!",
+  "Nie podawaj numeru karty w dziwnych miejscach – to jak oddanie klucza do swojej spiżarni!",
+  "Pamiętaj: im mniej udostępniasz, tym mniej tracisz!",
+  "Hej, szczurze, nie otwieraj dziwnych maili! Krzyczą 'darmowa nagroda'? To scam!",
+  "Publiczne Wi-Fi to jak stara dziurawa norka – łatwo cię wyśledzić!",
+  "Nie loguj się wszędzie jednym hasłem – to jak otwieranie każdej klatki jednym kluczem!",
+  "Nie wiesz, czy coś jest fejkiem? Sprawdź w kilku źródłach, zanim udostępnisz!",
+  "Nie wrzucaj wszystkiego do neta – co raz wyląduje w sieci, nigdy nie znika!",
+  "Ktoś ci pisze dziwnie znajomy, ale nie wiesz, czy to on? Może to oszust z maską!",
+  "Lepiej zignorować dziwną wiadomość, niż wpaść w sidła hakera!",
+  "Nie podawaj PESELu jakby to był numer telefonu – to nie informacja na sprzedaż!",
+  "Szczurze, zanim pobierzesz plik, zapytaj siebie: czy to źródło jest legit?",
+  "Jeśli coś wygląda podejrzanie, to pewnie jest podejrzane!",
+  "Nie wysyłaj nikomu swoich zdjęć, których nie chcesz zobaczyć w całym necie!",
+  "Szczurza zasada nr 1: ZAWSZE myśl, zanim klikniesz!"
+];
+
 function Home() {
+  const [tip, setTip] = useState("");
+  const [showText, setShowText] = useState(false);
+  
+  useEffect(() => {
+    const changeTip = () => {
+      setShowText(false);
+      setTimeout(() => {
+        const randomIndex = Math.floor(Math.random() * tips.length);
+        setTip(tips[randomIndex]);
+        setShowText(true);
+      }, 3000); // Czas trwania GIF-a (zmień jeśli potrzeba)
+    };
+    
+    changeTip();
+    const interval = setInterval(changeTip, 20000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div style={{ padding: 16 }}>
-      <h2>Welcome to your Plasmo Extension!</h2>
-      <a href="https://docs.plasmo.com" target="_blank" rel="noopener noreferrer">
-        View Docs
-      </a>
+    <div style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "90vh",
+      position: "relative"
+    }}>
+      {/* GIF */}
+      <img
+        src={SzczurekGif}
+        alt="Szczur Animacja"
+        style={{
+          width: "350px",
+          height: "350px",
+          marginLeft: "-50px",
+          imageRendering: "pixelated",
+          zIndex: 1, 
+        }}
+      />
+      
+      {showText && (
+        <h2 style={{
+          position: "absolute",
+          top: "20%",
+          color: "black",
+          fontSize: "14px",
+          width: "250px",
+          fontWeight: "bold",
+          zIndex: 2, 
+          textAlign: "center",
+        
+        }}>
+          {tip}
+        </h2>
+      )} 
     </div>
+    
   );
 }
+
+
+
+
 
 function Layout() {
   const { user } = useAuth();
