@@ -10,8 +10,10 @@
     "package": "plasmo package"
   },
   "dependencies": {
+    "openai": "^4.86.2",
     "plasmo": "0.90.3",
     "react": "18.2.0",
+    "react-chat-elements": "^12.0.17",
     "react-dom": "18.2.0",
     "react-router-dom": "^7.3.0"
   },
