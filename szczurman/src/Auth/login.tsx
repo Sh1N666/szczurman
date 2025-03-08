@@ -6,9 +6,11 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
+  const [error, setError] = useState(""); // 🔴 Stan do przechowywania błędów
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError(""); // Reset błędu przed nową próbą
 
     try {
       if (isRegistering) {
@@ -18,6 +20,36 @@ const Login = () => {
       }
     } catch (error) {
       console.error("❌ Authentication error:", error.message);
+      handleAuthError(error.code);
+    }
+  };
+
+  // 🔴 Funkcja mapująca błędy Firebase na czytelne komunikaty
+  const handleAuthError = (errorCode) => {
+    switch (errorCode) {
+      case "auth/invalid-email":
+        setError("❌ Nieprawidłowy format adresu e-mail.");
+        break;
+      case "auth/user-not-found":
+        setError("❌ Użytkownik nie istnieje. Zarejestruj się.");
+        break;
+      case "auth/wrong-password":
+        setError("❌ Nieprawidłowe hasło. Spróbuj ponownie.");
+        break;
+      case "auth/email-already-in-use":
+        setError("❌ Ten e-mail jest już zarejestrowany.");
+        break;
+      case "auth/weak-password":
+        setError("❌ Hasło jest za słabe (minimum 6 znaków).");
+        break;
+      case "auth/too-many-requests":
+        setError("❌ Za dużo prób logowania. Spróbuj później.");
+        break;
+      case "auth/invalid-credential":
+        setError("❌ Nieprawidłowe dane logowania.");
+        break;
+      default:
+        setError("❌ Wystąpił błąd. Spróbuj ponownie.");
     }
   };
 
@@ -41,6 +73,10 @@ const Login = () => {
         />
         <button type="submit">{isRegistering ? "Zarejestruj się" : "Zaloguj się"}</button>
       </form>
+
+      {/* 🔴 Wyświetlanie komunikatu błędu */}
+      {error && <p style={{ color: "red", marginTop: 10 }}>{error}</p>}
+
       <button onClick={() => setIsRegistering(!isRegistering)}>
         {isRegistering ? "Masz konto? Zaloguj się" : "Nie masz konta? Zarejestruj się"}
       </button>
