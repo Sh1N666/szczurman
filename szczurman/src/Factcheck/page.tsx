@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { Storage } from "@plasmohq/storage"
 import "~/styles/global.css";
+import Waluta from "data-base64:~assets/money.png"
 
 const storage = new Storage()
 
@@ -20,19 +21,27 @@ export default function Popup() {
     chrome.runtime.sendMessage({ action: "toggle_script", enabled: newState })
   }
 
-  return (
-    <div className="p-6 bg-[#ffe6a7] rounded-lg shadow-lg w-64 text-center text-[#99582a] font-semibold">
-      <h2 className="mb-4 text-xl font-bold border-b-2 border-[#ffbe0b] pb-2">Fact Checker</h2>
-      <label className="inline-flex items-center cursor-pointer">
-        <input
-          type="checkbox"
-          checked={enabled}
-          onChange={toggleFactChecker}
-          className="sr-only peer"
-        />
-        <div className="relative w-11 h-6 bg-[#dda15e] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#ffbe0b] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#99582a]"></div>
-        <span className="ml-3 text-sm font-medium">{enabled ? "Włączone" : "Wyłączone"}</span>
-      </label>
-    </div>
+  return ( 
+    <div className="flex justify-center items-center h-screen bg-[#dda15e]">
+  <div className="p-6 bg-[#ffe6a7] rounded-lg shadow-lg w-64 text-center text-[#6d4c2b] font-semibold">
+    <h2 className="mb-4 text-xl font-bold border-b-2 border-[#ffbe0b] pb-2">Fact Checker</h2>
+    <label className="inline-flex items-center cursor-pointer">
+      <input
+        type="checkbox"
+        checked={enabled}
+        onChange={toggleFactChecker}
+        className="sr-only peer"
+      />
+      <div className="relative w-11 h-6 bg-[#d4a373] peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-[#ffbe0b] rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border after:border-gray-300 after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#6d4c2b]"></div>
+      <span className="ml-3 text-sm font-medium text-[#6d4c2b]">
+        {enabled ? "Włączone" : "Wyłączone"}
+      </span>
+    </label>
+    <img src={Waluta} className="w-10 h-10 border-[#ffbe0b] border-2 rounded-full mt-4 mx-auto" alt="Waluta" />
+    <p className="mt-2 text-[#6d4c2b]">Aktualna waluta: 100</p>
+    <button className="mt-4 bg-[#6d4c2b] text-[#ffe6a7] px-4 py-2 rounded-md hover:bg-[#ffbe0b] hover:text-[#6d4c2b] transition-colors">Kup walutę</button>
+  </div>
+</div>
+
   )
 }
